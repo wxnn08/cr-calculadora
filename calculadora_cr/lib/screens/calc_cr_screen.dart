@@ -63,27 +63,8 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
               ),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text(
-                          'CR Atual: ' + widget.cr.crAtual.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          'Créditos totais: ' + widget.cr.credTotal.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                   Card(
-                    color: Theme.of(context).primaryColorLight,
+                    color: Theme.of(context).primaryColorDark,
                     elevation: 5,
                     shape: StadiumBorder(),
                     child: Padding(
@@ -97,6 +78,7 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                               style: TextStyle(
                                 fontSize: 48,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ],
@@ -104,6 +86,48 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                       ),
                     ),
                   ),
+                  Card(
+                    color: Colors.grey[400],
+                    elevation: 5,
+                    shape: StadiumBorder(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'CR: ' + widget.cr.crAtual.toStringAsFixed(2),
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Container(
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     children: <Widget>[
+                  //       Text(
+                  //         'CR Atual: ' + widget.cr.crAtual.toString(),
+                  //         style: TextStyle(
+                  //           fontSize: 16,
+                  //         ),
+                  //       ),
+                  //       Text(
+                  //         'Créditos totais: ' + widget.cr.credTotal.toString(),
+                  //         style: TextStyle(
+                  //           fontSize: 16,
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 16.0,
@@ -114,6 +138,8 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                           flex: 3,
                           child: TextField(
                             controller: _controllerNome,
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.sentences,
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               hintText: 'Disciplina',
@@ -126,7 +152,7 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                   Container(
                     width: double.maxFinite,
                     child: RaisedButton(
-                      child: Text('Adicionar'),
+                      child: Text('ADICIONAR DISCIPLINA'),
                       onPressed: () {
                         if (_controllerNome.text.trim().isEmpty) {
                           showDialog(
@@ -153,6 +179,7 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                           setState(() {
                             _disciplinas
                                 .add(Disciplina(_controllerNome.text, 0, 'F'));
+                            _controllerNome.clear();
                           });
                         }
                       },
@@ -173,10 +200,12 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                 },
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    title: Text(_disciplinas[index].nome +
-                        ' (' +
-                        _disciplinas[index].creditos.toString() +
-                        ')'),
+                    title: Text(
+                      _disciplinas[index].nome,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     subtitle: Row(
                       children: <Widget>[
                         DropdownButton<String>(
