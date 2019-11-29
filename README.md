@@ -7,6 +7,6 @@ Divirta-se!
 
 ## Telas
 
-![Tela01](./imgs/tela01.png)
+<img src="./imgs/tela01.png" height="600"/>
 
-![Tela01](./imgs/tela02.png)
+<img src="./imgs/tela02.png" height="600"/>
