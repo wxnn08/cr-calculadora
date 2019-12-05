@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double _sliderCrValue = 0.0;
-  String _creditosAprovados;
   TextEditingController _controllerAprovados = new TextEditingController();
   TextEditingController _controllerReprovadosFreq = new TextEditingController();
   TextEditingController _controllerReprovados = new TextEditingController();
@@ -33,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora CR'),
+        title: Text('CR Simulator'),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward),

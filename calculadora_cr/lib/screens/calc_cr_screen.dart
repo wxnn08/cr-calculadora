@@ -1,11 +1,20 @@
 import 'dart:math';
 import 'package:calculadora_cr/model/disciplina.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:calculadora_cr/model/meu_cr.dart';
+import 'package:flutter/services.dart';
+import 'package:line_icons/line_icons.dart';
 
 class CalcCrScreen extends StatefulWidget {
-  MeuCR cr = new MeuCR(0, 0, 0, 0);
-  CalcCrScreen(this.cr);
+  final MeuCR cr = new MeuCR(0, 0, 0, 0);
+  CalcCrScreen(MeuCR meuCR) {
+    cr.crAtual = meuCR.crAtual;
+    cr.credAprovados = meuCR.credAprovados;
+    cr.credReprovados = meuCR.credReprovados;
+    cr.credReprovadosFreq = meuCR.credReprovadosFreq;
+    cr.credTotal = meuCR.credTotal;
+  }
 
   @override
   _CalcCrScreenState createState() => _CalcCrScreenState();
@@ -48,7 +57,7 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculadora CR'),
+        title: Text('CR Simulator'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -109,25 +118,6 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //     children: <Widget>[
-                  //       Text(
-                  //         'CR Atual: ' + widget.cr.crAtual.toString(),
-                  //         style: TextStyle(
-                  //           fontSize: 16,
-                  //         ),
-                  //       ),
-                  //       Text(
-                  //         'Créditos totais: ' + widget.cr.credTotal.toString(),
-                  //         style: TextStyle(
-                  //           fontSize: 16,
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 16.0,
@@ -181,6 +171,7 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                                 .add(Disciplina(_controllerNome.text, 0, 'F'));
                             _controllerNome.clear();
                           });
+                          FocusScope.of(context).unfocus();
                         }
                       },
                     ),
@@ -202,30 +193,32 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                   return ListTile(
                     title: Text(
                       _disciplinas[index].nome,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
                     ),
                     subtitle: Row(
                       children: <Widget>[
-                        DropdownButton<String>(
-                          value: _ddCreditos[index],
-                          elevation: 16,
-                          hint: Text('Créditos'),
-                          onChanged: (String value) {
-                            setState(() {
-                              _ddCreditos[index] = value;
-                              _disciplinas[index].creditos = int.parse(value);
-                              attCr();
-                            });
-                          },
-                          items: creditos
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 16,
+                          ),
+                          child: DropdownButton<String>(
+                            value: _ddCreditos[index],
+                            elevation: 16,
+                            hint: Text('Créditos'),
+                            onChanged: (String value) {
+                              setState(() {
+                                _ddCreditos[index] = value;
+                                _disciplinas[index].creditos = int.parse(value);
+                                attCr();
+                              });
+                            },
+                            items: creditos
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                         DropdownButton<String>(
                           value: _ddConceito[index],
@@ -256,7 +249,7 @@ class _CalcCrScreenState extends State<CalcCrScreen> {
                         });
                       },
                       child: Icon(
-                        Icons.remove,
+                        LineIcons.trash,
                       ),
                     ),
                   );
