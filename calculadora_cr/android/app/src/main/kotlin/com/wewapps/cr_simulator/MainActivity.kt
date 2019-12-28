@@ -1,5 +1,4 @@
-package com.example.calculadora_cr
-
+package com.wewapps.cr_simulator
 import android.os.Bundle
 
 import io.flutter.app.FlutterActivity

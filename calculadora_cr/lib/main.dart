@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
           buttonColor: Color(0xFF4E8EF2),
           textTheme: ButtonTextTheme.primary,
         ),
+        snackBarTheme: SnackBarThemeData(
+          actionTextColor: Theme.of(context).primaryColor,
+        ),
         backgroundColor: Color(0xFFD5D5F3),
         floatingActionButtonTheme: FloatingActionButtonThemeData(),
       ),

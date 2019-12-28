@@ -1,7 +1,9 @@
+import 'package:calculadora_cr/screens/about_screen.dart';
 import 'package:calculadora_cr/screens/calc_cr_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:calculadora_cr/model/meu_cr.dart';
+import 'package:line_icons/line_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -33,6 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('CR Simulator'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              LineIcons.question_circle,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutScreen()),
+              );
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward),
@@ -139,15 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   labelText: 'Créditos reprovados',
                   border: OutlineInputBorder(),
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              'Desenvolvido por Wesley (github.com/wxnn08)',
-              style: TextStyle(
-                color: Colors.blueGrey,
               ),
             ),
           ],
